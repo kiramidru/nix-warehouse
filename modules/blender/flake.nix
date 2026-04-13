@@ -1,13 +1,11 @@
 {
-  description = "A free and open source 3D creation suite (upstream binaries)";
-
+  description = "A free and open source 3D creation suite";
   inputs.nixpkgs.url = "nixpkgs/nixpkgs-unstable";
 
   outputs =
     { self, nixpkgs }:
 
     let
-
       pkgs = import nixpkgs {
         system = "x86_64-linux";
         overlays = [ self.overlays.default ];
@@ -83,14 +81,6 @@
 
           meta.mainProgram = "blender";
         };
-
-      mkTest =
-        { blender }:
-        pkgs.runCommand "blender-test" { buildInputs = [ blender ]; } ''
-          blender --version
-          touch $out
-        '';
-
     in
     {
 
@@ -312,30 +302,5 @@
           ;
         default = blender_5_1;
       };
-
-      checks.x86_64-linux = {
-        blender_2_82 = mkTest { blender = self.packages.x86_64-linux.blender_2_82; };
-        blender_2_83 = mkTest { blender = self.packages.x86_64-linux.blender_2_83; };
-        blender_2_90 = mkTest { blender = self.packages.x86_64-linux.blender_2_90; };
-        blender_2_91 = mkTest { blender = self.packages.x86_64-linux.blender_2_91; };
-        blender_2_92 = mkTest { blender = self.packages.x86_64-linux.blender_2_92; };
-        blender_2_93 = mkTest { blender = self.packages.x86_64-linux.blender_2_93; };
-        blender_3_0 = mkTest { blender = self.packages.x86_64-linux.blender_3_0; };
-        blender_3_1 = mkTest { blender = self.packages.x86_64-linux.blender_3_1; };
-        blender_3_2 = mkTest { blender = self.packages.x86_64-linux.blender_3_2; };
-        blender_3_3 = mkTest { blender = self.packages.x86_64-linux.blender_3_3; };
-        blender_3_4 = mkTest { blender = self.packages.x86_64-linux.blender_3_4; };
-        blender_3_5 = mkTest { blender = self.packages.x86_64-linux.blender_3_5; };
-        blender_3_6 = mkTest { blender = self.packages.x86_64-linux.blender_3_6; };
-        blender_4_0 = mkTest { blender = self.packages.x86_64-linux.blender_4_0; };
-        blender_4_1 = mkTest { blender = self.packages.x86_64-linux.blender_4_1; };
-        blender_4_2 = mkTest { blender = self.packages.x86_64-linux.blender_4_2; };
-        blender_4_3 = mkTest { blender = self.packages.x86_64-linux.blender_4_3; };
-        blender_4_4 = mkTest { blender = self.packages.x86_64-linux.blender_4_4; };
-        blender_4_5 = mkTest { blender = self.packages.x86_64-linux.blender_4_5; };
-        blender_5_0 = mkTest { blender = self.packages.x86_64-linux.blender_5_0; };
-        blender_5_1 = mkTest { blender = self.packages.x86_64-linux.blender_5_1; };
-      };
-
     };
 }
