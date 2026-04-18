@@ -1,5 +1,5 @@
 {
-  description = "Gaming on Nix - A collection of launchers and tools";
+  description = "Nix Collection of Programs";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -24,6 +24,9 @@
       imports = [
         ./modules/blender
         ./modules/stardew-valley
+        ./modules/celeste
+        ./modules/terraria
+        ./modules/super-smash-bros-melee
       ];
 
       perSystem =
