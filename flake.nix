@@ -23,17 +23,26 @@
 
       imports = [
         ./modules/blender
-        ./modules/stardew-valley
-        ./modules/celeste
       ];
 
       perSystem =
         {
           pkgs,
+          config,
           ...
         }:
         {
           formatter = pkgs.nixfmt-rfc-style;
+
+          pre-commit.settings.hooks = {
+            nixfmt-rfc-style.enable = true;
+            deadnix.enable = true;
+            statix.enable = true;
+          };
+
+          checks = {
+            pre-commit-check = config.pre-commit.check;
+          };
 
           devShells.default = pkgs.mkShell {
             packages = with pkgs; [
