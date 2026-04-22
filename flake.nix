@@ -4,11 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
-
-    git-hooks = {
-      url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -32,14 +27,6 @@
           ...
         }:
         {
-          formatter = pkgs.nixfmt-rfc-style;
-
-          pre-commit.settings.hooks = {
-            nixfmt-rfc-style.enable = true;
-            deadnix.enable = true;
-            statix.enable = true;
-          };
-
           checks = {
             pre-commit-check = config.pre-commit.check;
           };
