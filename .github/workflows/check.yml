@@ -1,21 +1,10 @@
-name: "Nix Flake Check"
-on:
-  push:
-  pull_request:
+name: "check"
+on: ["push"]
 
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@v14 
-        with:
-          flakehub: false
-      
-      - name: Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@v8
-
-      - name: Check Flake
-        run: nix flake check
+      - uses: cachix/install-nix-action@v30
+      - run: nix flake check
