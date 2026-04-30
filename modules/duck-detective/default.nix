@@ -56,8 +56,7 @@
           cp -r source/data/noarch/game/* $out/opt/${pname}
 
           makeWrapper "$out/opt/${pname}/Duck Detective - The Ghost of Glamping" $out/bin/${pname} \
-            --prefix LD_LIBRARY_PATH : ${pkgs.lib.makeLibraryPath buildInputs}
-
+            --prefix LD_LIBRARY_PATH : ${pkgs.lib.makeLibraryPath deps}
 
           runHook postInstall
         '';
