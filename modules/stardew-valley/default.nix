@@ -8,7 +8,13 @@
       version = "1.6.15";
 
       deps = with pkgs; [
+        zlib
+        fontconfig
         stdenv.cc.cc.lib
+        libx11
+        libGL
+        openal
+        curl
       ];
     in
     {
