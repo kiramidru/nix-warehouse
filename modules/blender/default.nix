@@ -7,7 +7,7 @@
       mkBlender =
         { version, src }:
         let
-          libs =
+          deps =
             with pkgs;
             [
               wayland
@@ -35,6 +35,17 @@
               zlib
             ]
             ++ lib.optionals (lib.versionAtLeast version "4.5") [ vulkan-loader ];
+
+          desktopItem = pkgs.makeDesktopItem {
+            name = "blender-${version}";
+            desktopName = "Blender ${version}";
+            exec = "blender %f";
+            icon = "blender";
+            terminal = false;
+            categories = [
+              "Graphics"
+            ];
+          };
         in
         pkgs.stdenv.mkDerivation {
           pname = "blender-bin";
@@ -42,17 +53,15 @@
 
           nativeBuildInputs = [ pkgs.makeWrapper ];
 
+          desktopItems = [ desktopItem ];
+
           installPhase = ''
             mkdir -p $out/libexec/blender
             cp -r . $out/libexec/blender
-            mkdir -p $out/share/applications $out/share/icons/hicolor/scalable/apps
-
-            find $out/libexec/blender -name "*.desktop" -exec mv {} $out/share/applications/ \;
-            find $out/libexec/blender -name "*.svg" -exec mv {} $out/share/icons/hicolor/scalable/apps/ \;
 
             mkdir -p $out/bin
             makeWrapper $out/libexec/blender/blender $out/bin/blender \
-              --prefix LD_LIBRARY_PATH : "/run/opengl-driver/lib:${lib.makeLibraryPath libs}"
+              --prefix LD_LIBRARY_PATH : "/run/opengl-driver/lib:${lib.makeLibraryPath deps}"
 
             patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" $out/libexec/blender/blender
             find $out/libexec/blender -name "python3*" -executable -exec \
