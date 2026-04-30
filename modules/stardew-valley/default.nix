@@ -16,6 +16,17 @@
         openal
         curl
       ];
+
+      desktopItem = pkgs.makeDesktopItem {
+        name = "stardew-valley";
+        desktopName = "Stardew Valley";
+        exec = "stardew-valley";
+        icon = "stardew-valley";
+        terminal = false;
+        categories = [
+          "Game"
+        ];
+      };
     in
     {
       packages.${pname} = pkgs.stdenv.mkDerivation {
@@ -30,9 +41,12 @@
           autoPatchelfHook
           makeWrapper
           unzip
+          copyDesktopItems
         ];
 
         buildInputs = deps;
+
+        desktopItems = [ desktopItem ];
 
         autoPatchelfIgnoreMissingDeps = [ "liblttng-ust.so.0" ];
 

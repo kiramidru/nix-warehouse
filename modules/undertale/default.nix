@@ -21,6 +21,16 @@
         alsa-lib
       ];
 
+      desktopItem = pkgs.makeDesktopItem {
+        name = "undertale";
+        desktopName = "Undertale";
+        exec = "undertale";
+        icon = "undertale";
+        terminal = false;
+        categories = [
+          "Game"
+        ];
+      };
     in
     {
       packages.${pname} = pkgs32.stdenv.mkDerivation {
@@ -35,9 +45,12 @@
           autoPatchelfHook
           makeWrapper
           unzip
+          copyDesktopItems
         ];
 
         buildInputs = deps;
+
+        desktopItems = [ desktopItem ];
 
         unpackPhase = ''
           mkdir source

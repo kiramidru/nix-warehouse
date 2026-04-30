@@ -16,6 +16,17 @@
         openal
         libmodplug
       ];
+
+      desktopItem = pkgs.makeDesktopItem {
+        name = "balatro";
+        desktopName = "Balatro";
+        exec = "balatro";
+        icon = "balatro";
+        terminal = false;
+        categories = [
+          "Game"
+        ];
+      };
     in
     {
       packages.${pname} = pkgs.stdenv.mkDerivation {
@@ -30,9 +41,12 @@
           autoPatchelfHook
           makeWrapper
           p7zip
+          copyDesktopItems
         ];
 
         buildInputs = deps;
+
+        desktopItems = [ desktopItem ];
 
         unpackPhase = ''
           7z x $src -osource_temp
@@ -49,7 +63,6 @@
           makeWrapper ${pkgs.love}/bin/love $out/bin/${pname} \
             --add-flags "$out/opt/${pname}/balatro.love" \
             --prefix LD_LIBRARY_PATH : ${pkgs.lib.makeLibraryPath deps}
-
 
           runHook postInstall
         '';

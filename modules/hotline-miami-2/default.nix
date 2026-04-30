@@ -21,6 +21,17 @@
         fontconfig
         freetype
       ];
+
+      desktopItem = pkgs.makeDesktopItem {
+        name = "hotline-miami-2";
+        desktopName = "Hotline Miami 2";
+        exec = "hotline-miami-2";
+        icon = "hotline-miami-2";
+        terminal = false;
+        categories = [
+          "Game"
+        ];
+      };
     in
     {
       packages.${pname} = pkgs.stdenv.mkDerivation {
@@ -35,9 +46,12 @@
           autoPatchelfHook
           makeWrapper
           unzip
+          copyDesktopItems
         ];
 
         buildInputs = deps;
+
+        desktopItems = [ desktopItem ];
 
         unpackPhase = "unzip -q $src -d source || true";
 

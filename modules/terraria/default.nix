@@ -19,6 +19,17 @@
         vulkan-loader
         sdl3
       ];
+
+      desktopItem = pkgs.makeDesktopItem {
+        name = "terraria";
+        desktopName = "Terraria";
+        exec = "terraria";
+        icon = "terraria";
+        terminal = false;
+        categories = [
+          "Game"
+        ];
+      };
     in
     {
       packages.${pname} = pkgs.stdenv.mkDerivation {
@@ -33,9 +44,12 @@
           autoPatchelfHook
           makeWrapper
           unzip
+          copyDesktopItems
         ];
 
         buildInputs = deps;
+
+        desktopItems = [ desktopItem ];
 
         autoPatchelfIgnoreMissingDeps = [
           "libGLES_CM.so.1"

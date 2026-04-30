@@ -16,6 +16,16 @@
         zlib
       ];
 
+      desktopItem = pkgs.makeDesktopItem {
+        name = "star-wars-jedi-academy";
+        desktopName = "Star Wars: Jedi Academy";
+        exec = "jedi-academy";
+        icon = "jedi-academy";
+        terminal = false;
+        categories = [
+          "Game"
+        ];
+      };
     in
     {
       packages.${pname} = pkgs.stdenv.mkDerivation {
@@ -36,9 +46,12 @@
         nativeBuildInputs = with pkgs; [
           makeWrapper
           autoPatchelfHook
+          copyDesktopItems
         ];
 
         buildInputs = deps;
+
+        desktopItems = [ desktopItem ];
 
         installPhase = ''
           mkdir -p $out/bin $out/opt/${pname}

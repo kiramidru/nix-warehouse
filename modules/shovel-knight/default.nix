@@ -4,7 +4,7 @@
   perSystem =
     { pkgs, ... }:
     let
-      pname = "shovel-night";
+      pname = "shovel-knight";
       version = "4.1";
 
       deps = with pkgs; [
@@ -22,6 +22,17 @@
         gdk-pixbuf
         udev
       ];
+
+      desktopItem = pkgs.makeDesktopItem {
+        name = "shovel-knight";
+        desktopName = "Shovel Knight";
+        exec = "shovel-knight";
+        icon = "shovel-knight";
+        terminal = false;
+        categories = [
+          "Game"
+        ];
+      };
     in
     {
       packages.${pname} = pkgs.stdenv.mkDerivation {
@@ -36,9 +47,12 @@
           autoPatchelfHook
           makeWrapper
           unzip
+          copyDesktopItems
         ];
 
         buildInputs = deps;
+
+        desktopItems = [ desktopItem ];
 
         unpackPhase = "unzip -q $src -d source || true";
 

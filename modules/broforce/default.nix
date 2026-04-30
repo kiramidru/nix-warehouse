@@ -28,6 +28,17 @@
         gdk-pixbuf
         vulkan-loader
       ];
+
+      desktopItem = pkgs.makeDesktopItem {
+        name = "broforce";
+        desktopName = "Broforce";
+        exec = "broforce";
+        icon = "broforce";
+        terminal = false;
+        categories = [
+          "Game"
+        ];
+      };
     in
     {
       packages.${pname} = pkgs.stdenv.mkDerivation {
@@ -42,9 +53,12 @@
           autoPatchelfHook
           unzip
           makeWrapper
+          copyDesktopItems
         ];
 
         buildInputs = deps;
+
+        desktopItems = [ desktopItem ];
 
         unpackPhase = "unzip -q $src -d source || true";
 

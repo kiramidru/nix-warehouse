@@ -21,6 +21,17 @@
         libpulseaudio
         mono
       ];
+
+      desktopItem = pkgs.makeDesktopItem {
+        name = "celeste";
+        desktopName = "celeste";
+        exec = "celeste";
+        icon = "celeste";
+        terminal = false;
+        categories = [
+          "Game"
+        ];
+      };
     in
     {
       packages.${pname} = pkgs.stdenv.mkDerivation {
@@ -34,9 +45,12 @@
         nativeBuildInputs = with pkgs; [
           makeWrapper
           autoPatchelfHook
+          copyDesktopItems
         ];
 
         buildInputs = deps;
+
+        desktopItems = [ desktopItem ];
 
         installPhase = ''
           runHook preInstall

@@ -22,6 +22,17 @@
         freetype
         zlib
       ];
+
+      desktopItem = pkgs.makeDesktopItem {
+        name = "hotline-miami";
+        desktopName = "Hotline Miami";
+        exec = "hotline-miami";
+        icon = "hotline-miami";
+        terminal = false;
+        categories = [
+          "Game"
+        ];
+      };
     in
     {
       packages.${pname} = pkgs32.stdenv.mkDerivation {
@@ -36,9 +47,12 @@
           autoPatchelfHook
           makeWrapper
           unzip
+          copyDesktopItems
         ];
 
         buildInputs = deps;
+
+        desktopItems = [ desktopItem ];
 
         unpackPhase = "unzip -q $src -d source || true";
 

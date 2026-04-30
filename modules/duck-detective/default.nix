@@ -29,6 +29,17 @@
         libXi
         udev
       ];
+
+      desktopItem = pkgs.makeDesktopItem {
+        name = "duck-detective";
+        desktopName = "Duck Detective";
+        exec = "duck-detective";
+        icon = "balatro";
+        terminal = false;
+        categories = [
+          "Game"
+        ];
+      };
     in
     {
       packages.${pname} = pkgs.stdenv.mkDerivation {
@@ -43,9 +54,12 @@
           autoPatchelfHook
           makeWrapper
           unzip
+          copyDesktopItems
         ];
 
         buildInputs = deps;
+
+        desktopItems = [ desktopItem ];
 
         unpackPhase = "unzip -q $src -d source || true";
 

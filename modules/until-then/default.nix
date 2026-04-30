@@ -20,6 +20,17 @@
         libXi
         vulkan-loader
       ];
+
+      desktopItem = pkgs.makeDesktopItem {
+        name = "until-then";
+        desktopName = "Until Then";
+        exec = "until-then";
+        icon = "until-then";
+        terminal = false;
+        categories = [
+          "Game"
+        ];
+      };
     in
     {
       packages.${pname} = pkgs.stdenv.mkDerivation {
@@ -34,9 +45,12 @@
           autoPatchelfHook
           makeWrapper
           p7zip
+          copyDesktopItems
         ];
 
         buildInputs = deps;
+
+        desktopItems = [ desktopItem ];
 
         unpackPhase = ''
           7z x $src -osource_temp
