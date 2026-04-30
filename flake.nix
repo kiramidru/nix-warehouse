@@ -17,7 +17,19 @@
       ];
 
       imports = [
+        ./modules/balatro
         ./modules/blender
+        ./modules/broforce
+        ./modules/celeste
+        ./modules/duck-detective
+        ./modules/hotline-miami
+        ./modules/hotline-miami-2
+        ./modules/jedi-academy
+        ./modules/shovel-knight
+        ./modules/stardew-valley
+        ./modules/terraria
+        ./modules/undertale
+        ./modules/until-then
       ];
 
       perSystem =
