@@ -8,13 +8,26 @@
       version = "1.6.15";
 
       deps = with pkgs; [
-        zlib
-        fontconfig
         stdenv.cc.cc.lib
-        libx11
         libGL
+        libglvnd
+        libx11
+        libxi
+        libxcursor
+        libxrandr
+        libxkbcommon
+        alsa-lib
+        libpulseaudio
+        udev
+        zlib
         openal
-        curl
+        SDL2
+        lttng-ust
+        fontconfig
+        libxft
+        libcap
+        icu
+        openssl
       ];
 
       desktopItem = pkgs.makeDesktopItem {
