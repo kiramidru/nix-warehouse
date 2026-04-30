@@ -51,14 +51,16 @@
           pname = "blender-bin";
           inherit version src;
 
-          nativeBuildInputs = [
-            pkgs.makeWrapper
-            pkgs.copyDesktopItems
+          nativeBuildInputs = with pkgs; [
+            makeWrapper
+            copyDesktopItems
           ];
 
           desktopItems = [ desktopItem ];
 
           installPhase = ''
+            runHook preInstall
+
             mkdir -p $out/libexec/blender
             cp -r . $out/libexec/blender
 
@@ -69,6 +71,8 @@
             patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" $out/libexec/blender/blender
             find $out/libexec/blender -name "python3*" -executable -exec \
               patchelf --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" {} \;
+
+            runHook postInstall
           '';
         };
 
