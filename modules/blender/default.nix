@@ -51,7 +51,10 @@
           pname = "blender-bin";
           inherit version src;
 
-          nativeBuildInputs = [ pkgs.makeWrapper ];
+          nativeBuildInputs = [
+            pkgs.makeWrapper
+            pkgs.copyDesktopItems
+          ];
 
           desktopItems = [ desktopItem ];
 
