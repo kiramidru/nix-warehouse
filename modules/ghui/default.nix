@@ -22,6 +22,8 @@
       packages.${pname} = builder.mkDerivation {
         inherit pname version src;
 
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+
         bunDeps = builder.fetchBunDeps {
           bunNix = ./bun.nix;
           src = src;
@@ -40,6 +42,16 @@
           "--format"
           "esm"
         ];
+
+        postInstall = ''
+          wrapProgram $out/bin/${pname} \
+            --prefix PATH : ${
+              pkgs.lib.makeBinPath [
+                pkgs.gh
+                pkgs.git
+              ]
+            }
+        '';
       };
     };
 }
